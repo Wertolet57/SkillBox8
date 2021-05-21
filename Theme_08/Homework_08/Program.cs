@@ -84,8 +84,63 @@ namespace Homework_08
             ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
             ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
             /// 
-
-
+            List<Department> departments = new List<Department>();
+            List<Worker> workers = new List<Worker>();
+            while (true)
+            {
+                Console.WriteLine("Выбирите действие\n" +
+                                  "1) Добавление департамента\n" +
+                                  "2) Удаление департамента\n" +
+                                  "3) Редактировать департамент\n" +
+                                  "4) Добавить сотрудника\n" +
+                                  "5) Удалить сотрудника\n" +
+                                  "6) Редактировать сотрудника\n" +
+                                  "7) Отсортировать\n" +
+                                  "8) Импорт в XML\n" +
+                                  "9) Импорт в JSON\n" +
+                                  "10) Показать все записи\n" +
+                                  "11)Выйти\n");
+                Console.WriteLine("Введите номер действия ");
+                string action = Console.ReadLine();
+                if (action != "11" && action != null)
+                {
+                    switch (action)
+                    {
+                        case "1":
+                            
+                            break;
+                        case "2":
+                            
+                            break;
+                        case "3":
+                            
+                            break;
+                        case "4":
+                            
+                            break;
+                        case "5":
+                            
+                            break;
+                        case "6":
+                            
+                            break;
+                        case "7":
+                            
+                            break;
+                        case "8":
+                            
+                            break;
+                        case "9":
+                            
+                            break;
+                        case "10":
+                            
+                            break;
+                    }
+                }
+                else break;
+            }
+            Console.ReadKey();
 
 
 
