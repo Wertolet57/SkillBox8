@@ -136,7 +136,7 @@ namespace Homework_08
                             
                             break;
                         case "10":
-                            
+                            company.PrintAllDepartments();
                             break;
                     }
                 }
