@@ -15,6 +15,7 @@ namespace Homework_08
         public int ID;
         public int salary;
         public short numOfProjects;
+
         public Worker(string name, string surname, short age, Department departmentName, int ID, int salary, short numOfProjects)
         {
             this.name = name;
