@@ -68,20 +68,59 @@ namespace Homework_08
 					break;
 			}
 			Console.WriteLine("Департамент добавлен");
-            if(inDep.Count>0)return new Department(name, date, numOfWorkers);
-			return new Department(name, date, numOfWorkers, inDep);
+			if (inDep.Count == 0)
+			{
+				departments.Add(new Department(name, date, numOfWorkers));
+				return new Department(name, date, numOfWorkers);
+			}
+            else
+			{
+				departments.Add(new Department(name, date, numOfWorkers,inDep));
+				return new Department(name, date, numOfWorkers, inDep);
+			}
 		}
 		public void PrintAllDepartments()
 		{
 			if (departments.Count==0)Console.WriteLine("Нет департаментов");
             else
 			{
-                Console.WriteLine("Название\tДата\tСотрудники\tДепартаменты");
+				string str = String.Format("{0, -10} | {1, -20} | {2, 13} | {3,10} | {4,10}",
+						   "№",
+						   "Название",
+						   "Дата создания",
+						   "Сотрудники",
+						   "Департаменты");
+				Console.WriteLine(str);
+				int i = 1;
 				foreach (var dep in departments)
 				{
-					Console.WriteLine($"{dep.nameOfDepartment}\t{dep.dateOfCreate}\t{dep.numOfWorkers}\t{dep.departments.Count}");
+						str = String.Format("{0, -10} | {1, -20} | {2, 13} | {3,10} | {4,10}",
+						i++,
+						dep.nameOfDepartment,
+						dep.dateOfCreate.ToString("d"),
+						dep.numOfWorkers,
+						dep.departments.Count);
+					Console.WriteLine(str);
 				}
 			}
+		}
+		public void DeleteDepartment()
+        {
+            if (departments.Count == 0)
+            {
+                Console.WriteLine("Нет департаментов");
+				return;
+            }
+            Console.WriteLine("Какой департамент хотите удалить?");
+			PrintAllDepartments();
+			int num;
+			while (true)
+			{
+				if (int.TryParse(Console.ReadLine(), out num))
+					if (num<departments.Count) break;
+				Console.WriteLine("Некорректное значение");
+			}
+			departments.RemoveAt(num - 1);
 		}
 	}
 }

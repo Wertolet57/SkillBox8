@@ -112,7 +112,7 @@ namespace Homework_08
                             company.AddNewDepartment();
                             break;
                         case "2":
-                            
+                            company.DeleteDepartment();
                             break;
                         case "3":
                             
