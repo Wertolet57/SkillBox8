@@ -13,7 +13,7 @@ namespace Homework_08
         public int numOfWorkers;
         public List<Department> departments;
 
-        public Department(string nameOfDepartment, DateTime dateOfCreate, int numOfWorkers, List<Department> departments)
+        public Department(string nameOfDepartment, DateTime dateOfCreate,int numOfWorkers, List<Department> departments)
         {
             this.nameOfDepartment = nameOfDepartment;
             this.dateOfCreate = dateOfCreate;
@@ -21,11 +21,19 @@ namespace Homework_08
             this.departments = departments;
         }
 
-        public Department(string nameOfDepartment, DateTime dateOfCreate, int numOfWorkers)
+        public Department(string nameOfDepartment, DateTime dateOfCreate, List<Department> departments)
         {
             this.nameOfDepartment = nameOfDepartment;
             this.dateOfCreate = dateOfCreate;
-            this.numOfWorkers = numOfWorkers;
+            this.numOfWorkers = 0;
+            this.departments = departments;
+        }
+
+        public Department(string nameOfDepartment, DateTime dateOfCreate)
+        {
+            this.nameOfDepartment = nameOfDepartment;
+            this.dateOfCreate = dateOfCreate;
+            this.numOfWorkers = 0;
             this.departments = new List<Department>();
         }
     }

@@ -11,12 +11,12 @@ namespace Homework_08
         public string name;
         public string surname;
         public short age;
-        public Department departmentName;
+        public string departmentName;
         public int ID;
         public int salary;
         public short numOfProjects;
 
-        public Worker(string name, string surname, short age, Department departmentName, int ID, int salary, short numOfProjects)
+        public Worker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
         {
             this.name = name;
             this.surname = surname;

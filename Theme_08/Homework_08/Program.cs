@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Homework_08
 {
     class Program
     {
+        static void SerializeCompany(Company ConcreteCompany, string Path)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Company));
+            Stream fStream = new FileStream(Path, FileMode.Create, FileAccess.Write);
+            xmlSerializer.Serialize(fStream, ConcreteCompany);
+            fStream.Close();
+        }
         static void Main(string[] args)
         {
-            
+
             /// Создать прототип информационной системы, в которой есть возможност работать со структурой организации
             /// В структуре присутствуют департаменты и сотрудники
             /// Каждый департамент может содержать не более 1_000_000 сотрудников.
@@ -85,6 +94,7 @@ namespace Homework_08
             ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
             ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
             /// 
+            Console.WriteLine("qwe".CompareTo("asd"));
             Company company = new Company();
             company.workers = new List<Worker>();
             company.departments = new List<Department>();
@@ -98,13 +108,14 @@ namespace Homework_08
                                   "5) Удалить сотрудника\n" +
                                   "6) Редактировать сотрудника\n" +
                                   "7) Отсортировать\n" +
-                                  "8) Импорт в XML\n" +
-                                  "9) Импорт в JSON\n" +
-                                  "10) Показать все записи\n" +
-                                  "11)Выйти\n");
+                                  "8) Сохранить в XML\n" +
+                                  "9) Сохранить в JSON\n" +
+                                  "10) Показать все департаменты\n" +
+                                  "11) Показать всех сотрудников\n" +
+                                  "12)Выйти\n");
                 Console.WriteLine("Введите номер действия ");
                 string action = Console.ReadLine();
-                if (action != "11" && action != null)
+                if (action != "12" && action != null)
                 {
                     switch (action)
                     {
@@ -115,28 +126,31 @@ namespace Homework_08
                             company.DeleteDepartment();
                             break;
                         case "3":
-                            
+                            company.ChangeDepartments();
                             break;
                         case "4":
-                            
+                            company.AddWorker();
                             break;
                         case "5":
-                            
+                            company.DeleteWorker();
                             break;
                         case "6":
-                            
+                            company.ChangeWorker();
                             break;
                         case "7":
-                            
+                            company.Sort();
                             break;
                         case "8":
-                            
+                            SerializeCompany(company, "_company.xml");
                             break;
                         case "9":
                             
                             break;
                         case "10":
                             company.PrintAllDepartments();
+                            break;
+                        case "11":
+                            company.PrintAllWorkers();
                             break;
                     }
                 }
