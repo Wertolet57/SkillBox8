@@ -319,124 +319,66 @@ namespace Homework_08
                 }
             }
             PrintWorkers(workers);
-            Worker[] workers1 = new Worker[workers.Count];
-            workers1 = workers.ToArray();
             Console.WriteLine("По какому полю сортируем(Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out num))
-                    if (num>=1 && num <= 6) break;
+                    if (num >= 1 && num <= 6) break;
                 Console.WriteLine("Некорректное значение");
             }
 
-            Worker change;
+            IOrderedEnumerable<Worker> result = null;
             switch (num)
             {
                 case 1:
-                    for (int i = 0; i < workers1.Length; i++)
-                    {
-                        for (int j = 0; j < workers1.Length-1; j++)
-                        {
-                            if (workers1[j].name.CompareTo(workers1[j + 1].name) == 1)
-                            {
-                                change = workers1[j];
-                                workers1[j] = workers1[j + 1];
-                                workers1[j + 1] = change;
-
-                            }
-                        }
-                    }
+                    result = workers.OrderBy(w => w.name);
                     break;
                 case 2:
-                    for (int i = 0; i < workers1.Length; i++)
-                    {
-                        for (int j = 0; j < workers1.Length - 1; j++)
-                        {
-                            Console.WriteLine(workers1[j].surname.CompareTo(workers1[j + 1].surname));
-                            if (workers1[j].surname.CompareTo(workers1[j + 1].surname) == 1)
-                            {
-                                change = workers1[j];
-                                workers1[j] = workers1[j + 1];
-                                workers1[j + 1] = change;
-
-                            }
-                        }
-                    }
+                    result = workers.OrderBy(w => w.surname);
                     break;
                 case 3:
-                    for (int i = 0; i < workers1.Length; i++)
-                    {
-                        for (int j = 0; j < workers1.Length - 1; j++)
-                        {
-                            if (workers1[j].age>workers1[j + 1].age)
-                            {
-                                change = workers1[j];
-                                workers1[j] = workers1[j + 1];
-                                workers1[j + 1] = change;
-
-                            }
-                        }
-                    }
+                    result = workers.OrderBy(w => w.age);
                     break;
                 case 4:
-                    for (int i = 0; i < workers1.Length; i++)
-                    {
-                        for (int j = 0; j < workers1.Length - 1; j++)
-                        {
-                            if (workers1[j].ID > workers1[j + 1].ID)
-                            {
-                                change = workers1[j];
-                                workers1[j] = workers1[j + 1];
-                                workers1[j + 1] = change;
-
-                            }
-                        }
-                    }
+                    result = workers.OrderBy(w => w.ID);
                     break;
                 case 5:
-                    for (int i = 0; i < workers1.Length; i++)
-                    {
-                        for (int j = 0; j < workers1.Length - 1; j++)
-                        {
-                            if (workers1[j].salary > workers1[j + 1].salary)
-                            {
-                                change = workers1[j];
-                                workers1[j] = workers1[j + 1];
-                                workers1[j + 1] = change;
-
-                            }
-                        }
-                    }
+                    result = workers.OrderBy(w => w.salary);
                     break;
                 case 6:
-                    for (int i = 0; i < workers1.Length; i++)
-                    {
-                        for (int j = 0; j < workers1.Length - 1; j++)
-                        {
-                            if (workers1[j].numOfProjects > workers1[j + 1].numOfProjects)
-                            {
-                                change = workers1[j];
-                                workers1[j] = workers1[j + 1];
-                                workers1[j + 1] = change;
-
-                            }
-                        }
-                    }
+                    result = workers.OrderBy(w => w.numOfProjects);
                     break;
             }
-            workers = new List<Worker>(workers1);
-            PrintWorkers(workers);
-            Console.WriteLine("По какому полю отсортировать еще(0 - если не нужно, Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
-            int num1;
+            PrintWorkers(result.ToList());
+            Console.WriteLine("По какому еще полю сортируем(0 - не сортируем, Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out num1))
-                    if (num1 >= 0 && num1 <= 6) break;
+                if (int.TryParse(Console.ReadLine(), out num))
+                    if (num >= 0 && num <= 6) break;
                 Console.WriteLine("Некорректное значение");
             }
-
-            workers = new List<Worker>(workers1);
-            PrintWorkers(workers);
+            switch (num)
+            {
+                case 1:
+                    result = result.ThenBy(w => w.name);
+                    break;
+                case 2:
+                    result = result.ThenBy(w => w.surname);
+                    break;
+                case 3:
+                    result = result.ThenBy(w => w.age);
+                    break;
+                case 4:
+                    result = result.ThenBy(w => w.ID);
+                    break;
+                case 5:
+                    result = result.ThenBy(w => w.salary);
+                    break;
+                case 6:
+                    result = result.ThenBy(w => w.numOfProjects);
+                    break;
+            }
+            PrintWorkers(result.ToList());
         }
 
         public void SerializeCompanyXML(string Path)
