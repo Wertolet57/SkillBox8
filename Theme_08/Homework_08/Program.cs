@@ -4,19 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace Homework_08
 {
     class Program
     {
-        static void SerializeCompany(Company ConcreteCompany, string Path)
-        {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Company));
-            Stream fStream = new FileStream(Path, FileMode.Create, FileAccess.Write);
-            xmlSerializer.Serialize(fStream, ConcreteCompany);
-            fStream.Close();
-        }
         static void Main(string[] args)
         {
 
@@ -92,9 +84,7 @@ namespace Homework_08
             ///  4   Имя_4     Фамилия_4          24         Отдел_1            10000                      3 
             /// 10  Имя_10    Фамилия_10          21         Отдел_2            10000                      3 
             ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
-            ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
-            /// 
-            Console.WriteLine("qwe".CompareTo("asd"));
+            ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3
             Company company = new Company();
             company.workers = new List<Worker>();
             company.departments = new List<Department>();
@@ -141,10 +131,10 @@ namespace Homework_08
                             company.Sort();
                             break;
                         case "8":
-                            SerializeCompany(company, "_company.xml");
+                            company.SerializeCompanyXML("_company.xml");
                             break;
                         case "9":
-                            
+                            company.SerializeCompanyJSON("_company.json");
                             break;
                         case "10":
                             company.PrintAllDepartments();

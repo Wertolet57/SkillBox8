@@ -1,5 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.IO;
+using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Homework_08
 {
@@ -433,7 +439,79 @@ namespace Homework_08
             PrintWorkers(workers);
         }
 
-        
+        public void SerializeCompanyXML(string Path)
+        {
+            XElement myCompany = new XElement("COMPANY");
+            XElement myDepartment;
+            XElement myWorker;
+            XAttribute[] xAttributeDepartment = new XAttribute[3];
+            XAttribute[] xAttributeWorker = new XAttribute[7];
+            for (int i = 0; i < departments.Count; i++)
+            {
+                myDepartment = new XElement("DEPARTMENT");
+                xAttributeDepartment[0] = new XAttribute("nameOfDepartment", departments[i].nameOfDepartment);
+                xAttributeDepartment[1] = new XAttribute("dateOfCreate", departments[i].dateOfCreate);
+                xAttributeDepartment[2] = new XAttribute("numOfWorkers", departments[i].numOfWorkers);
+                myDepartment.Add(xAttributeDepartment);
+                for (int j = 0; j < workers.Count; j++)
+                {
+                    myWorker = new XElement("WORKER");
+                    if (workers[j].departmentName == departments[i].nameOfDepartment)
+                    {
+                        xAttributeWorker[0] = new XAttribute("name", workers[j].name);
+                        xAttributeWorker[1] = new XAttribute("surname", workers[j].surname);
+                        xAttributeWorker[2] = new XAttribute("age", workers[j].age);
+                        xAttributeWorker[3] = new XAttribute("departmentName", workers[j].departmentName);
+                        xAttributeWorker[4] = new XAttribute("ID", workers[j].ID);
+                        xAttributeWorker[5] = new XAttribute("salary", workers[j].salary);
+                        xAttributeWorker[6] = new XAttribute("numOfProjects", workers[j].numOfProjects);
+                        myWorker.Add(xAttributeWorker);
+                        myDepartment.Add(myWorker);
+                    }
+                }
+                myCompany.Add(myDepartment);
+            }
+
+            myCompany.Save(Path);
+            
+        }
+
+        public void SerializeCompanyJSON(string Path)
+        {
+            JArray arrayWorkers;
+            JArray arrayDepartment = new JArray();
+            JObject company = new JObject();
+            JObject depatrment;
+            JObject worker;
+            for (int i = 0; i < departments.Count; i++)
+            {
+                depatrment = new JObject();
+                arrayWorkers = new JArray();
+                depatrment["nameOfDepartment"] = departments[i].nameOfDepartment;
+                depatrment["dateOfCreate"] = departments[i].dateOfCreate;
+                depatrment["numOfWorkers"] = departments[i].numOfWorkers;
+                for (int j = 0; j < workers.Count; j++)
+                {
+                    worker = new JObject();
+                    if (workers[j].departmentName == departments[i].nameOfDepartment)
+                    {
+                        worker["name"] = workers[j].name;
+                        worker["surname"] = workers[j].surname;
+                        worker["age"] = workers[j].age;
+                        worker["departmentName"] = workers[j].departmentName;
+                        worker["ID"] = workers[j].ID;
+                        worker["salary"] = workers[j].salary;
+                        worker["numOfProjects"] = workers[j].numOfProjects;
+                        arrayWorkers.Add(worker);
+                    }
+                }
+                depatrment["WORKERS"] = arrayWorkers;
+                arrayDepartment.Add(depatrment);
+            }
+            company["DEPARTMENTS"] = arrayDepartment;
+            string json = company.ToString();
+            File.WriteAllText(Path, json);
+        }
 
         void PrintWorkers(List<Worker> workers)
         {
