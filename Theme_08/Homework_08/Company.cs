@@ -14,28 +14,18 @@ namespace Homework_08
         public List<Worker> workers;
         public List<Department> departments;
 
-        public Department AddNewDepartment(int n = 1)
+        public Company(int _1)
         {
-            List<Department> inDep = new List<Department>();
-            Console.WriteLine("Введите название департамента");
-            string name = Console.ReadLine();
-            Console.WriteLine("Введите дату создания департамента");
-            DateTime date;
-            while (true)
-            {
-                if (DateTime.TryParse(Console.ReadLine(), out date)) break;
-                Console.WriteLine("Некорректное значение");
-            }
-            //int numOfWorkers;
-            //Console.WriteLine("Введите кол-во сотрудников");
-            //while (true)
-            //{
-            //    if (int.TryParse(Console.ReadLine(), out numOfWorkers)) break;
-            //    Console.WriteLine("Некорректное значение");
-            //}
-            Console.WriteLine("Вложенные департаменты");
+            workers = new List<Worker>();
+            departments = new List<Department>();
+        }
+
+        public void AddNewDepartment()
+        {
+            departments.Add(Department.CreateNew());
             Console.WriteLine("Выбрать из существующих(1), добавить новый(2), таких нет(3)");
             int num;
+            Department inDep;
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out num))
@@ -45,7 +35,7 @@ namespace Homework_08
             switch (num)
             {
                 case 1:
-                    if (departments.Count == 0)
+                    if (departments.Count - 1 == 0)
                     {
                         Console.WriteLine("Департаментов нет");
                     }
@@ -55,42 +45,25 @@ namespace Homework_08
                         {
                             Console.WriteLine("Выберите департамент");
                             PrintAllDepartments();
-                            inDep.Add(departments[int.Parse(Console.ReadLine()) - 1]);
+                            departments[departments.Count - 1].departments.Add(departments[int.Parse(Console.ReadLine()) - 1]);
                             Console.WriteLine("Еще? (да/нет)");
                             if (Console.ReadLine() != "да") break;
                         }
                     }
                     break;
                 case 2:
+                    int count = 1;
                     while (true)
                     {
-                        inDep.Add(AddNewDepartment());
+                        inDep = Department.CreateNew();
+                        departments[departments.Count - count++].departments.Add(inDep);
+                        departments.Add(inDep);
                         Console.WriteLine("Еще? (да/нет)");
                         if (Console.ReadLine() != "да") break;
                     }
                     break;
             }
-            if (n == 1)
-            {
-                Console.WriteLine("Департамент добавлен");
-                if (inDep.Count == 0)
-                {
-                    departments.Add(new Department(name, date));
-                }
-                else
-                {
-                    departments.Add(new Department(name, date, inDep));
-                }
-            }
-            if (inDep.Count == 0)
-            {
-                return new Department(name, date);
-            }
-            else
-            {
-                return new Department(name, date, inDep);
-            }
-
+            Console.WriteLine("Департамент добавлен");
         }
 
         public void PrintAllDepartments()
@@ -213,7 +186,7 @@ namespace Homework_08
                     if (num <= departments.Count) break;
                 Console.WriteLine("Некорректное значение");
             }
-            departments[num - 1] = AddNewDepartment(0);
+            departments[num - 1] = Department.CreateNew();
             Console.WriteLine("Департамент изменен");
         }
 

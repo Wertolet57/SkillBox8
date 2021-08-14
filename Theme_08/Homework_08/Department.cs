@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Homework_08
 {
@@ -13,7 +10,7 @@ namespace Homework_08
         public int numOfWorkers;
         public List<Department> departments;
 
-        public Department(string nameOfDepartment, DateTime dateOfCreate,int numOfWorkers, List<Department> departments)
+        public Department(string nameOfDepartment, DateTime dateOfCreate, int numOfWorkers, List<Department> departments)
         {
             this.nameOfDepartment = nameOfDepartment;
             this.dateOfCreate = dateOfCreate;
@@ -35,6 +32,20 @@ namespace Homework_08
             this.dateOfCreate = dateOfCreate;
             this.numOfWorkers = 0;
             this.departments = new List<Department>();
+        }
+        public static Department CreateNew()
+        {
+            Console.WriteLine("Введите название департамента");
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите дату создания департамента");
+            DateTime date;
+            while (true)
+            {
+                if (DateTime.TryParse(Console.ReadLine(), out date)) break;
+                Console.WriteLine("Некорректное значение");
+            }
+            
+            return new Department(name, date);
         }
     }
 }

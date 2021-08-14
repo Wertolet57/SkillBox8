@@ -85,9 +85,7 @@ namespace Homework_08
             /// 10  Имя_10    Фамилия_10          21         Отдел_2            10000                      3 
             ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
             ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3
-            Company company = new Company();
-            company.workers = new List<Worker>();
-            company.departments = new List<Department>();
+            Company company = new Company(1);
             while (true)
             {
                 Console.WriteLine("Выбирите действие\n" +
@@ -116,7 +114,7 @@ namespace Homework_08
                             company.DeleteDepartment();
                             break;
                         case "3":
-                            company.ChangeDepartments();
+                            //company.ChangeDepartments();
                             break;
                         case "4":
                             company.AddWorker();
