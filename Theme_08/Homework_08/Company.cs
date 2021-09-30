@@ -23,46 +23,6 @@ namespace Homework_08
         public void AddNewDepartment()
         {
             departments.Add(Department.CreateNew());
-            Console.WriteLine("Выбрать из существующих(1), добавить новый(2), таких нет(3)");
-            int num;
-            Department inDep;
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num == 1 || num == 2 || num == 3) break;
-                Console.WriteLine("Некорректное значение");
-            }
-            switch (num)
-            {
-                case 1:
-                    if (departments.Count - 1 == 0)
-                    {
-                        Console.WriteLine("Департаментов нет");
-                    }
-                    else
-                    {
-                        while (true)
-                        {
-                            Console.WriteLine("Выберите департамент");
-                            PrintAllDepartments();
-                            departments[departments.Count - 1].departments.Add(departments[int.Parse(Console.ReadLine()) - 1]);
-                            Console.WriteLine("Еще? (да/нет)");
-                            if (Console.ReadLine() != "да") break;
-                        }
-                    }
-                    break;
-                case 2:
-                    int count = 1;
-                    while (true)
-                    {
-                        inDep = Department.CreateNew();
-                        departments[departments.Count - count++].departments.Add(inDep);
-                        departments.Add(inDep);
-                        Console.WriteLine("Еще? (да/нет)");
-                        if (Console.ReadLine() != "да") break;
-                    }
-                    break;
-            }
             Console.WriteLine("Департамент добавлен");
         }
 
@@ -71,22 +31,20 @@ namespace Homework_08
             if (departments.Count == 0) Console.WriteLine("Нет департаментов");
             else
             {
-                string str = String.Format("{0, -10} | {1, -20} | {2, 13} | {3,10} | {4,10}",
+                string str = String.Format("{0, -10} | {1, -20} | {2, 13} | {3,10} ",
                            "№",
                            "Название",
                            "Дата создания",
-                           "Сотрудники",
-                           "Департаменты");
+                           "Сотрудники");
                 Console.WriteLine(str);
                 int i = 1;
                 foreach (var dep in departments)
                 {
-                    str = String.Format("{0, -10} | {1, -20} | {2, 13} | {3,10} | {4,10}",
+                    str = String.Format("{0, -10} | {1, -20} | {2, 13} | {3,10}",
                     i++,
                     dep.nameOfDepartment,
                     dep.dateOfCreate.ToString("d"),
-                    dep.numOfWorkers,
-                    dep.departments.Count);
+                    dep.numOfWorkers);
                     Console.WriteLine(str);
                 }
             }
@@ -101,91 +59,22 @@ namespace Homework_08
             }
             Console.WriteLine("Какой департамент хотите удалить?");
             PrintAllDepartments();
-            int num;
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num <= departments.Count) break;
-                Console.WriteLine("Некорректное значение");
-            }
+            int num = Check(departments.Count);
             departments.RemoveAt(num - 1);
             Console.WriteLine("Департамент удален");
         }
 
-        public Worker AddWorker(int n = 1)
-
+        public void AddWorker()
         {
-            Console.WriteLine("Введите имя сотрудника");
-            string name = Console.ReadLine();
-            Console.WriteLine("Введите фамилию сотрудника");
-            string surname = Console.ReadLine();
-            Console.WriteLine("Введите возраст сотрудника");
-            int age;
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out age))
-                    break;
-                Console.WriteLine("Некорректное значение");
-            }
-            Console.WriteLine("В каком депортаменте работает");
-            if (departments.Count == 0)
-            {
-                Console.WriteLine("Департаментов нет");
-                Console.WriteLine("Добавьте департамент");
-                AddNewDepartment();
-            }
-            int num;
-            while (true)
-            {
-                PrintAllDepartments();
-                Console.WriteLine("Введите номер департамента");
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num <= departments.Count) break;
-                Console.WriteLine("Некорректное значение");
-            }
-            int ID;
-            while (true)
-            {
-                Console.WriteLine("Введите ID");
-                if (int.TryParse(Console.ReadLine(), out ID))
-                    break;
-                Console.WriteLine("Некорректное значение");
-            }
-            int solary;
-            while (true)
-            {
-                Console.WriteLine("Введите зарплату");
-                if (int.TryParse(Console.ReadLine(), out solary))
-                    break;
-                Console.WriteLine("Некорректное значение");
-            }
-            int project;
-            while (true)
-            {
-                Console.WriteLine("Введите кол-во проектов");
-                if (int.TryParse(Console.ReadLine(), out project))
-                    break;
-                Console.WriteLine("Некорректное значение");
-            }
-            if (n == 1)
-            {
-                workers.Add(new Worker(name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project));
-                departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers+1, departments[num - 1].departments);
-            }
-            return new Worker(name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project);
+            workers.Add(Worker.CreateNew(departments, false));
+            Console.WriteLine("Сотрудник добавлен");
         }
 
         public void ChangeDepartments()
         {
             PrintAllDepartments();
             Console.WriteLine("Какой депортамент хотите изменить?");
-            int num;
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num <= departments.Count) break;
-                Console.WriteLine("Некорректное значение");
-            }
+            int num = Check(departments.Count);
             departments[num - 1] = Department.CreateNew();
             Console.WriteLine("Департамент изменен");
         }
@@ -231,12 +120,13 @@ namespace Homework_08
             }
             PrintAllWorkers();
             Console.WriteLine("Какого сотрудника удалить?");
-            int num;
-            while (true)
+            int num = Check(workers.Count);
+            foreach (var dep in departments)
             {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num <= workers.Count) break;
-                Console.WriteLine("Некорректное значение");
+                if (dep.nameOfDepartment == workers[num - 1].departmentName)
+                {
+                    departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers - 1);
+                }
             }
             workers.RemoveAt(num - 1);
             Console.WriteLine("Работник удален");
@@ -251,14 +141,8 @@ namespace Homework_08
             }
             PrintAllWorkers();
             Console.WriteLine("Какого сотрудника редактируем?");
-            int num;
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num <= workers.Count) break;
-                Console.WriteLine("Некорректное значение");
-            }
-            workers[num - 1] = AddWorker(0);
+            int num = Check(workers.Count);
+            workers[num - 1] = Worker.CreateNew(departments,true);
             Console.WriteLine("Работник изменен");
         }
 
@@ -272,13 +156,7 @@ namespace Homework_08
             PrintAllDepartments();
             List<Worker> workers = new List<Worker>();
             Console.WriteLine("В каком департаменте сортируем сотрудников");
-            int num;
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num <= departments.Count) break;
-                Console.WriteLine("Некорректное значение");
-            }
+            int num = Check(departments.Count);
             if (departments[num-1].numOfWorkers==0)
             {
                 Console.WriteLine("Нет сотрудников в этом департаменте");
@@ -293,12 +171,7 @@ namespace Homework_08
             }
             PrintWorkers(workers);
             Console.WriteLine("По какому полю сортируем(Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num >= 1 && num <= 6) break;
-                Console.WriteLine("Некорректное значение");
-            }
+            num = Check(6, 1);
 
             IOrderedEnumerable<Worker> result = null;
             switch (num)
@@ -324,12 +197,7 @@ namespace Homework_08
             }
             PrintWorkers(result.ToList());
             Console.WriteLine("По какому еще полю сортируем(0 - не сортируем, Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
-            while (true)
-            {
-                if (int.TryParse(Console.ReadLine(), out num))
-                    if (num >= 0 && num <= 6) break;
-                Console.WriteLine("Некорректное значение");
-            }
+            num = Check(6);
             switch (num)
             {
                 case 1:
@@ -454,6 +322,18 @@ namespace Homework_08
                            worker.numOfProjects);
                 Console.WriteLine(str);
             }
+        }
+
+        public static int Check(int max = int.MaxValue, int min = 0)
+        {
+            int num;
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out num))
+                    if (num <= max && num >= min) break;
+                Console.WriteLine("Некорректное значение");
+            }
+            return num;
         }
 
     }

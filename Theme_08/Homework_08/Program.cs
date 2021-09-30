@@ -114,7 +114,7 @@ namespace Homework_08
                             company.DeleteDepartment();
                             break;
                         case "3":
-                            //company.ChangeDepartments();
+                            company.ChangeDepartments();
                             break;
                         case "4":
                             company.AddWorker();

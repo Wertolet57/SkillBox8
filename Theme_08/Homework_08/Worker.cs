@@ -26,5 +26,33 @@ namespace Homework_08
             this.salary = salary;
             this.numOfProjects = numOfProjects;
         }
+        public static Worker CreateNew(List<Department> departments, bool old)
+        {
+            Console.WriteLine("Введите имя сотрудника");
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите фамилию сотрудника");
+            string surname = Console.ReadLine();
+            Console.WriteLine("Введите возраст сотрудника");
+            int age = Company.Check();
+            int ID = Company.Check();
+            int solary = Company.Check();
+            int project = Company.Check();
+            Console.WriteLine("В каком депортаменте работает");
+            if (departments.Count == 0)
+            {
+                Console.WriteLine("Департаментов нет");
+                Console.WriteLine("Добавьте департамент, после добавляйте сотрудников");
+                return new Worker(name, surname, (short)age, "None", ID, solary, (short)project);
+            }
+            else
+            {
+                int num = Company.Check(departments.Count);
+                if (!old)
+                {
+                    departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers + 1);
+                }
+                return new Worker(name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project);
+            }
+        }
     }
 }
