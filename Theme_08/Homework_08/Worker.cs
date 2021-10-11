@@ -8,14 +8,44 @@ namespace Homework_08
 {
     struct Worker
     {
+        /// <summary>
+        /// Имя
+        /// </summary>
         public string name;
+        /// <summary>
+        /// Фамилия
+        /// </summary>
         public string surname;
+        /// <summary>
+        /// Возраст
+        /// </summary>
         public short age;
+        /// <summary>
+        /// Департамент в котором работает
+        /// </summary>
         public string departmentName;
+        /// <summary>
+        /// ID
+        /// </summary>
         public int ID;
+        /// <summary>
+        /// Зарплата
+        /// </summary>
         public int salary;
+        /// <summary>
+        /// Кол-во проектов
+        /// </summary>
         public short numOfProjects;
-
+        /// <summary>
+        /// Конструктор работника
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="departmentName">Департамент</param>
+        /// <param name="ID">ID</param>
+        /// <param name="salary">Зарплата</param>
+        /// <param name="numOfProjects">Кол-во проектов</param>
         public Worker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
         {
             this.name = name;
@@ -25,34 +55,6 @@ namespace Homework_08
             this.ID = ID;
             this.salary = salary;
             this.numOfProjects = numOfProjects;
-        }
-        public static Worker CreateNew(List<Department> departments, bool old)
-        {
-            Console.WriteLine("Введите имя сотрудника");
-            string name = Console.ReadLine();
-            Console.WriteLine("Введите фамилию сотрудника");
-            string surname = Console.ReadLine();
-            Console.WriteLine("Введите возраст сотрудника");
-            int age = Company.Check();
-            int ID = Company.Check();
-            int solary = Company.Check();
-            int project = Company.Check();
-            Console.WriteLine("В каком депортаменте работает");
-            if (departments.Count == 0)
-            {
-                Console.WriteLine("Департаментов нет");
-                Console.WriteLine("Добавьте департамент, после добавляйте сотрудников");
-                return new Worker(name, surname, (short)age, "None", ID, solary, (short)project);
-            }
-            else
-            {
-                int num = Company.Check(departments.Count);
-                if (!old)
-                {
-                    departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers + 1);
-                }
-                return new Worker(name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project);
-            }
         }
     }
 }

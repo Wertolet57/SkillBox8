@@ -11,80 +11,6 @@ namespace Homework_08
     {
         static void Main(string[] args)
         {
-
-            /// Создать прототип информационной системы, в которой есть возможност работать со структурой организации
-            /// В структуре присутствуют департаменты и сотрудники
-            /// Каждый департамент может содержать не более 1_000_000 сотрудников.
-            /// У каждого департамента есть поля: наименование, дата создания,
-            /// количество сотрудников числящихся в нём 
-            /// (можно добавить свои пожелания)
-            /// 
-            /// У каждого сотрудника есть поля: Фамилия, Имя, Возраст, департамент в котором он числится, 
-            /// уникальный номер, размер оплаты труда, количество закрепленным за ним.
-            ///
-            /// В данной информаиционной системе должна быть возможность 
-            /// - импорта и экспорта всей информации в xml и json
-            /// Добавление, удаление, редактирование сотрудников и департаментов
-            /// 
-            /// * Реализовать возможность упорядочивания сотрудников в рамках одно департамента 
-            /// по нескольким полям, например возрасту и оплате труда
-            /// 
-            ///  №     Имя       Фамилия     Возраст     Департамент     Оплата труда    Количество проектов
-            ///  1   Имя_1     Фамилия_1          23         Отдел_1            10000                      3 
-            ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
-            ///  3   Имя_3     Фамилия_3          22         Отдел_1            20000                      3 
-            ///  4   Имя_4     Фамилия_4          24         Отдел_1            10000                      3 
-            ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
-            ///  6   Имя_6     Фамилия_6          22         Отдел_1            10000                      3 
-            ///  7   Имя_7     Фамилия_7          23         Отдел_1            20000                      3 
-            ///  8   Имя_8     Фамилия_8          23         Отдел_1            30000                      3 
-            ///  9   Имя_9     Фамилия_9          21         Отдел_1            30000                      3 
-            /// 10  Имя_10    Фамилия_10          21         Отдел_2            10000                      3 
-            /// 
-            /// 
-            /// Упорядочивание по одному полю возраст
-            /// 
-            ///  №     Имя       Фамилия     Возраст     Департамент     Оплата труда    Количество проектов
-            ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
-            /// 10  Имя_10    Фамилия_10          21         Отдел_2            10000                      3 
-            ///  9   Имя_9     Фамилия_9          21         Отдел_1            30000                      3 
-            ///  3   Имя_3     Фамилия_3          22         Отдел_1            20000                      3 
-            ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
-            ///  6   Имя_6     Фамилия_6          22         Отдел_1            10000                      3 
-            ///  1   Имя_1     Фамилия_1          23         Отдел_1            10000                      3 
-            ///  8   Имя_8     Фамилия_8          23         Отдел_1            30000                      3 
-            ///  7   Имя_7     Фамилия_7          23         Отдел_1            20000                      3 
-            ///  4   Имя_4     Фамилия_4          24         Отдел_1            10000                      3 
-            /// 
-            ///
-            /// Упорядочивание по полям возраст и оплате труда
-            /// 
-            ///  №     Имя       Фамилия     Возраст     Департамент     Оплата труда    Количество проектов
-            /// 10  Имя_10    Фамилия_10          21         Отдел_2            10000                      3 
-            ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
-            ///  9   Имя_9     Фамилия_9          21         Отдел_1            30000                      3 
-            ///  6   Имя_6     Фамилия_6          22         Отдел_1            10000                      3 
-            ///  3   Имя_3     Фамилия_3          22         Отдел_1            20000                      3 
-            ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
-            ///  1   Имя_1     Фамилия_1          23         Отдел_1            10000                      3 
-            ///  7   Имя_7     Фамилия_7          23         Отдел_1            20000                      3 
-            ///  8   Имя_8     Фамилия_8          23         Отдел_1            30000                      3 
-            ///  4   Имя_4     Фамилия_4          24         Отдел_1            10000                      3 
-            /// 
-            /// 
-            /// Упорядочивание по полям возраст и оплате труда в рамках одного департамента
-            /// 
-            ///  №     Имя       Фамилия     Возраст     Департамент     Оплата труда    Количество проектов
-            ///  9   Имя_9     Фамилия_9          21         Отдел_1            30000                      3 
-            ///  6   Имя_6     Фамилия_6          22         Отдел_1            10000                      3 
-            ///  3   Имя_3     Фамилия_3          22         Отдел_1            20000                      3 
-            ///  1   Имя_1     Фамилия_1          23         Отдел_1            10000                      3 
-            ///  7   Имя_7     Фамилия_7          23         Отдел_1            20000                      3 
-            ///  8   Имя_8     Фамилия_8          23         Отдел_1            30000                      3 
-            ///  4   Имя_4     Фамилия_4          24         Отдел_1            10000                      3 
-            /// 10  Имя_10    Фамилия_10          21         Отдел_2            10000                      3 
-            ///  2   Имя_2     Фамилия_2          21         Отдел_2            20000                      3 
-            ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3
             Company company = new Company(1);
             while (true)
             {
@@ -108,25 +34,96 @@ namespace Homework_08
                     switch (action)
                     {
                         case "1":
-                            company.AddNewDepartment();
+                            var result = CreateNew();
+                            company.AddNewDepartment(result.Item1,result.Item2);
+                            Console.WriteLine("Департамент добавлен");
                             break;
                         case "2":
-                            company.DeleteDepartment();
+                            if (company.departments.Count == 0)
+                            {
+                                Console.WriteLine("Нет департаментов");
+                                return;
+                            }
+                            Console.WriteLine("Какой департамент хотите удалить?");
+                            company.PrintAllDepartments();
+                            int num = Company.Check(company.departments.Count);
+                            company.DeleteDepartment(num - 1);
+                            Console.WriteLine("Департамент удален");
                             break;
                         case "3":
-                            company.ChangeDepartments();
+                            company.PrintAllDepartments();
+                            Console.WriteLine("Какой депортамент хотите изменить?");
+                            num =Company.Check(company.departments.Count);
+                            result = CreateNew();
+                            company.ChangeDepartments(num, result.Item1, result.Item2);
+                            Console.WriteLine("Департамент изменен");
                             break;
                         case "4":
-                            company.AddWorker();
+                            var result1 = CreateNew(company, company.departments, false);
+                            company.AddWorker(result1.Item1, result1.Item2, result1.Item3, result1.Item4, result1.Item5, result1.Item6, result1.Item7);
+                            Console.WriteLine("Сотрудник добавлен");
                             break;
                         case "5":
-                            company.DeleteWorker();
+                            if (company.workers.Count == 0)
+                            {
+                                Console.WriteLine("Нет сотрудников");
+                                return;
+                            }
+                            company.PrintAllWorkers();
+                            Console.WriteLine("Какого сотрудника удалить?");
+                            num = Company.Check(company.workers.Count);
+                            foreach (var dep in company.departments)
+                            {
+                                if (dep.nameOfDepartment == company.workers[num - 1].departmentName)
+                                {
+                                    company.departments[num - 1] = new Department(company.departments[num - 1].nameOfDepartment, company.departments[num - 1].dateOfCreate, company.departments[num - 1].numOfWorkers - 1);
+                                    break;
+                                }
+                            }
+                            company.DeleteWorker(num-1);
+                            Console.WriteLine("Работник удален");
                             break;
                         case "6":
-                            company.ChangeWorker();
+                            if (company.workers.Count == 0)
+                            {
+                                Console.WriteLine("Нет сотрудников");
+                                return;
+                            }
+                            company.PrintAllWorkers();
+                            Console.WriteLine("Какого сотрудника редактируем?");
+                            num = Company.Check(company.workers.Count);
+                            result1 = CreateNew(company, company.departments, true);
+                            company.ChangeWorker(num-1,result1.Item1, result1.Item2, result1.Item3, result1.Item4, result1.Item5, result1.Item6, result1.Item7);
+                            Console.WriteLine("Работник изменен");
                             break;
                         case "7":
-                            company.Sort();
+                            if (company.departments.Count == 0)
+                            {
+                                Console.WriteLine("Нет департаментов");
+                                return;
+                            }
+                            company.PrintAllDepartments();
+                            List<Worker> workers = new List<Worker>();
+                            Console.WriteLine("В каком департаменте сортируем сотрудников");
+                            num = Company.Check(company.departments.Count);
+                            if (company.departments[num - 1].numOfWorkers == 0)
+                            {
+                                Console.WriteLine("Нет сотрудников в этом департаменте");
+                                return;
+                            }
+                            foreach (var worker in company.workers)
+                            {
+                                if (worker.departmentName == company.departments[num - 1].nameOfDepartment)
+                                {
+                                    workers.Add(worker);
+                                }
+                            }
+                            company.PrintWorkers(workers);
+                            Console.WriteLine("По какому полю сортируем(Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
+                            num = Company.Check(6, 1);
+                            Console.WriteLine("По какому еще полю сортируем(0 - не сортируем, Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
+                            int num1 = Company.Check(6);
+                            company.Sort(num, num1);
                             break;
                         case "8":
                             company.SerializeCompanyXML("_company.xml");
@@ -145,12 +142,62 @@ namespace Homework_08
                 else break;
             }
             Console.ReadKey();
-
-
-
-
-
-
+        }
+        /// <summary>
+        /// Новая информация для департамента
+        /// </summary>
+        /// <returns>Новая информация о департаменте</returns>
+        public static (string,DateTime) CreateNew()
+        {
+            Console.WriteLine("Введите название департамента");
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите дату создания департамента");
+            DateTime date;
+            while (true)
+            {
+                if (DateTime.TryParse(Console.ReadLine(), out date)) break;
+                Console.WriteLine("Некорректное значение");
+            }
+            return (name, date);
+        }
+        /// <summary>
+        /// Новая информация для сотрдника
+        /// </summary>
+        /// <param name="company">Компания</param>
+        /// <param name="departments">Департаменты</param>
+        /// <param name="old">Новый/старый сотрудник</param>
+        /// <returns>Новая информация о сотрднике</returns>
+        public static (string,string,short,string,int,int,short) CreateNew(Company company, List<Department> departments, bool old)
+        {
+            Console.WriteLine("Введите имя сотрудника");
+            string name = Console.ReadLine();
+            Console.WriteLine("Введите фамилию сотрудника");
+            string surname = Console.ReadLine();
+            Console.WriteLine("Введите возраст сотрудника");
+            int age = Company.Check();
+            Console.WriteLine("Введите ID сотрудника");
+            int ID = Company.Check();
+            Console.WriteLine("Введите зарплату сотрудника");
+            int solary = Company.Check();
+            Console.WriteLine("Введите кол-во проектов сотрудника");
+            int project = Company.Check();
+            Console.WriteLine("В каком депортаменте работает");
+            company.PrintAllDepartments();
+            if (departments.Count == 0)
+            {
+                Console.WriteLine("Департаментов нет");
+                Console.WriteLine("Добавьте департамент, после добавляйте сотрудников");
+                return(name, surname, (short)age, "None", ID, solary, (short)project);
+            }
+            else
+            {
+                int num = Company.Check(departments.Count);
+                if (!old)
+                {
+                    departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers + 1);
+                }
+                return (name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project);
+            }
         }
     }
 }

@@ -11,21 +11,38 @@ namespace Homework_08
 {
     struct Company
     {
+        /// <summary>
+        /// Сотрудники
+        /// </summary>
         public List<Worker> workers;
+        /// <summary>
+        /// Департаменты
+        /// </summary>
         public List<Department> departments;
 
+        /// <summary>
+        /// Создание компании
+        /// </summary>
+        /// <param name="_1"></param>
         public Company(int _1)
         {
             workers = new List<Worker>();
             departments = new List<Department>();
         }
 
-        public void AddNewDepartment()
+        /// <summary>
+        /// Добавление нового департамента
+        /// </summary>
+        /// <param name="name">Название</param>
+        /// <param name="date">Дата создания</param>
+        public void AddNewDepartment(string name, DateTime date)
         {
-            departments.Add(Department.CreateNew());
-            Console.WriteLine("Департамент добавлен");
+            departments.Add(new Department(name, date));
         }
 
+        /// <summary>
+        /// Вывести все департаменты
+        /// </summary>
         public void PrintAllDepartments()
         {
             if (departments.Count == 0) Console.WriteLine("Нет департаментов");
@@ -50,35 +67,61 @@ namespace Homework_08
             }
         }
 
-        public void DeleteDepartment()
+        /// <summary>
+        /// Удалить департамент
+        /// </summary>
+        /// <param name="num">Индекс</param>
+        public void DeleteDepartment(int num)
         {
-            if (departments.Count == 0)
-            {
-                Console.WriteLine("Нет департаментов");
-                return;
-            }
-            Console.WriteLine("Какой департамент хотите удалить?");
-            PrintAllDepartments();
-            int num = Check(departments.Count);
-            departments.RemoveAt(num - 1);
-            Console.WriteLine("Департамент удален");
+            
+            departments.RemoveAt(num);
         }
 
-        public void AddWorker()
+        /// <summary>
+        /// Добавление нового сотрудника
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="departmentName"></param>
+        /// <param name="ID">ID</param>
+        /// <param name="salary">Зарплата</param>
+        /// <param name="numOfProjects">Кол-во проектов</param>
+        public void AddWorker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
         {
-            workers.Add(Worker.CreateNew(departments, false));
-            Console.WriteLine("Сотрудник добавлен");
+            workers.Add(new Worker(name,surname,age,departmentName,ID,salary,numOfProjects));
         }
 
-        public void ChangeDepartments()
+        /// <summary>
+        /// Изменить сотрудника
+        /// </summary>
+        /// <param name="num">Индекс</param>
+        /// <param name="name">Имя</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="departmentName"></param>
+        /// <param name="ID">ID</param>
+        /// <param name="salary">Зарплата</param>
+        /// <param name="numOfProjects">Кол-во проектов</param>
+        public void ChangeWorker(int num, string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
         {
-            PrintAllDepartments();
-            Console.WriteLine("Какой депортамент хотите изменить?");
-            int num = Check(departments.Count);
-            departments[num - 1] = Department.CreateNew();
-            Console.WriteLine("Департамент изменен");
+            workers[num] = new Worker(name, surname, age, departmentName, ID, salary, numOfProjects);
         }
 
+        /// <summary>
+        /// Изменить департамент
+        /// </summary>
+        /// <param name="num">Индекс</param>
+        /// <param name="name">Название</param>
+        /// <param name="date">Дата создания</param>
+        public void ChangeDepartments(int num, string name, DateTime date)
+        {
+            departments[num - 1] = new Department(name, date);
+        }
+
+        /// <summary>
+        /// Вывести всех сотрудников
+        /// </summary>
         public void PrintAllWorkers()
         {
             if (workers.Count == 0) Console.WriteLine("Нет сотрудников");
@@ -111,68 +154,22 @@ namespace Homework_08
             }
         }
 
-        public void DeleteWorker()
+        /// <summary>
+        /// Удалить сотрудника
+        /// </summary>
+        /// <param name="num">Индекс</param>
+        public void DeleteWorker(int num)
         {
-            if (workers.Count == 0)
-            {
-                Console.WriteLine("Нет сотрудников");
-                return;
-            }
-            PrintAllWorkers();
-            Console.WriteLine("Какого сотрудника удалить?");
-            int num = Check(workers.Count);
-            foreach (var dep in departments)
-            {
-                if (dep.nameOfDepartment == workers[num - 1].departmentName)
-                {
-                    departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers - 1);
-                }
-            }
-            workers.RemoveAt(num - 1);
-            Console.WriteLine("Работник удален");
+            workers.RemoveAt(num);
         }
 
-        public void ChangeWorker()
+        /// <summary>
+        /// Сортировка
+        /// </summary>
+        /// <param name="num">Первое поля для сортировки</param>
+        /// <param name="num1">Дополнительное поле</param>
+        public void Sort(int num, int num1)
         {
-            if (workers.Count == 0)
-            {
-                Console.WriteLine("Нет сотрудников");
-                return;
-            }
-            PrintAllWorkers();
-            Console.WriteLine("Какого сотрудника редактируем?");
-            int num = Check(workers.Count);
-            workers[num - 1] = Worker.CreateNew(departments,true);
-            Console.WriteLine("Работник изменен");
-        }
-
-        public void Sort()
-        {
-            if (departments.Count == 0)
-            {
-                Console.WriteLine("Нет департаментов");
-                return;
-            }
-            PrintAllDepartments();
-            List<Worker> workers = new List<Worker>();
-            Console.WriteLine("В каком департаменте сортируем сотрудников");
-            int num = Check(departments.Count);
-            if (departments[num-1].numOfWorkers==0)
-            {
-                Console.WriteLine("Нет сотрудников в этом департаменте");
-                return;
-            }
-            foreach (var worker in this.workers)
-            {
-                if (worker.departmentName == departments[num - 1].nameOfDepartment)
-                {
-                    workers.Add(worker);
-                }
-            }
-            PrintWorkers(workers);
-            Console.WriteLine("По какому полю сортируем(Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
-            num = Check(6, 1);
-
             IOrderedEnumerable<Worker> result = null;
             switch (num)
             {
@@ -195,10 +192,7 @@ namespace Homework_08
                     result = workers.OrderBy(w => w.numOfProjects);
                     break;
             }
-            PrintWorkers(result.ToList());
-            Console.WriteLine("По какому еще полю сортируем(0 - не сортируем, Имя - 1, Фамилия - 2, Возраст - 3, ID - 4, Зарплата - 5, Кол-во проектов - 6)");
-            num = Check(6);
-            switch (num)
+            switch (num1)
             {
                 case 1:
                     result = result.ThenBy(w => w.name);
@@ -222,6 +216,10 @@ namespace Homework_08
             PrintWorkers(result.ToList());
         }
 
+        /// <summary>
+        /// Сериализаци в XML
+        /// </summary>
+        /// <param name="Path">Путь у файлу</param>
         public void SerializeCompanyXML(string Path)
         {
             XElement myCompany = new XElement("COMPANY");
@@ -259,6 +257,10 @@ namespace Homework_08
             
         }
 
+        /// <summary>
+        /// Сериализация в JSON
+        /// </summary>
+        /// <param name="Path">Путь у файлу</param>
         public void SerializeCompanyJSON(string Path)
         {
             JArray arrayWorkers;
@@ -296,7 +298,11 @@ namespace Homework_08
             File.WriteAllText(Path, json);
         }
 
-        void PrintWorkers(List<Worker> workers)
+        /// <summary>
+        /// Вывести список сотрудников
+        /// </summary>
+        /// <param name="workers">Список сотрудников</param>
+        public void PrintWorkers(List<Worker> workers)
         {
             string str = String.Format("{0, -10} | {1, -20} | {2, -20} | {3,7} | {4,11} | {5,10} | {6,10} | {7,10}",
                            "№",
@@ -324,6 +330,12 @@ namespace Homework_08
             }
         }
 
+        /// <summary>
+        /// Проверка ввода для int
+        /// </summary>
+        /// <param name="max">Максимальное значение</param>
+        /// <param name="min">Минимальное значение</param>
+        /// <returns></returns>
         public static int Check(int max = int.MaxValue, int min = 0)
         {
             int num;
