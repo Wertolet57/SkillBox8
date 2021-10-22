@@ -35,9 +35,10 @@ namespace Homework_08
         /// </summary>
         /// <param name="name">Название</param>
         /// <param name="date">Дата создания</param>
-        public void AddNewDepartment(string name, DateTime date)
+        /// <param name="depId">ID департамента</param>
+        public void AddNewDepartment(string name, DateTime date, int depId)
         {
-            departments.Add(new Department(name, date));
+            departments.Add(new Department(name, date, depId));
         }
 
         /// <summary>
@@ -87,9 +88,10 @@ namespace Homework_08
         /// <param name="ID">ID</param>
         /// <param name="salary">Зарплата</param>
         /// <param name="numOfProjects">Кол-во проектов</param>
-        public void AddWorker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
+        /// <param name="depId">ID департамента</param>
+        public void AddWorker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects, int depId)
         {
-            workers.Add(new Worker(name,surname,age,departmentName,ID,salary,numOfProjects));
+            workers.Add(new Worker(name,surname,age,departmentName,ID,salary,numOfProjects, depId));
         }
 
         /// <summary>
@@ -103,9 +105,10 @@ namespace Homework_08
         /// <param name="ID">ID</param>
         /// <param name="salary">Зарплата</param>
         /// <param name="numOfProjects">Кол-во проектов</param>
-        public void ChangeWorker(int num, string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
+        /// <param name="depId">ID департамента</param>
+        public void ChangeWorker(int num, string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects, int depId)
         {
-            workers[num] = new Worker(name, surname, age, departmentName, ID, salary, numOfProjects);
+            workers[num] = new Worker(name, surname, age, departmentName, ID, salary, numOfProjects, depId);
         }
 
         /// <summary>
@@ -114,9 +117,10 @@ namespace Homework_08
         /// <param name="num">Индекс</param>
         /// <param name="name">Название</param>
         /// <param name="date">Дата создания</param>
-        public void ChangeDepartments(int num, string name, DateTime date)
+        /// <param name="depId">ID департамента</param>
+        public void ChangeDepartments(int num, string name, DateTime date, int depId)
         {
-            departments[num - 1] = new Department(name, date);
+            departments[num - 1] = new Department(name, date, depId);
         }
 
         /// <summary>

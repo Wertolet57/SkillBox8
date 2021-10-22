@@ -36,6 +36,7 @@ namespace Homework_08
         /// Кол-во проектов
         /// </summary>
         public short numOfProjects;
+        public int depId;
         /// <summary>
         /// Конструктор работника
         /// </summary>
@@ -46,7 +47,8 @@ namespace Homework_08
         /// <param name="ID">ID</param>
         /// <param name="salary">Зарплата</param>
         /// <param name="numOfProjects">Кол-во проектов</param>
-        public Worker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects)
+        /// <param name="depId">ID департамента</param>
+        public Worker(string name, string surname, short age, string departmentName, int ID, int salary, short numOfProjects, int depId)
         {
             this.name = name;
             this.surname = surname;
@@ -55,6 +57,7 @@ namespace Homework_08
             this.ID = ID;
             this.salary = salary;
             this.numOfProjects = numOfProjects;
+            this.depId = depId;
         }
     }
 }

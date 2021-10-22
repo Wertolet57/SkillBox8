@@ -35,7 +35,7 @@ namespace Homework_08
                     {
                         case "1":
                             var result = CreateNew();
-                            company.AddNewDepartment(result.Item1,result.Item2);
+                            company.AddNewDepartment(result.Item1, result.Item2, result.Item3);
                             Console.WriteLine("Департамент добавлен");
                             break;
                         case "2":
@@ -55,13 +55,20 @@ namespace Homework_08
                             Console.WriteLine("Какой депортамент хотите изменить?");
                             num =Company.Check(company.departments.Count);
                             result = CreateNew();
-                            company.ChangeDepartments(num, result.Item1, result.Item2);
+                            company.ChangeDepartments(num, result.Item1, result.Item2, result.Item3);
                             Console.WriteLine("Департамент изменен");
                             break;
                         case "4":
-                            var result1 = CreateNew(company, company.departments, false);
-                            company.AddWorker(result1.Item1, result1.Item2, result1.Item3, result1.Item4, result1.Item5, result1.Item6, result1.Item7);
-                            Console.WriteLine("Сотрудник добавлен");
+                            if (company.departments.Count == 0)
+                            {
+                                Console.WriteLine("Сначала добавьте департамент, после добавляйте сотрудников");
+                            }
+                            else
+                            {
+                                var result3 = CreateNew(company, company.departments, false);
+                                company.AddWorker(result3.Item1, result3.Item2, result3.Item3, result3.Item4, result3.Item5, result3.Item6, result3.Item7, result3.Item8);
+                                Console.WriteLine("Сотрудник добавлен");
+                            }
                             break;
                         case "5":
                             if (company.workers.Count == 0)
@@ -74,9 +81,9 @@ namespace Homework_08
                             num = Company.Check(company.workers.Count);
                             foreach (var dep in company.departments)
                             {
-                                if (dep.nameOfDepartment == company.workers[num - 1].departmentName)
+                                if (dep.depId == company.workers[num - 1].depId)
                                 {
-                                    company.departments[num - 1] = new Department(company.departments[num - 1].nameOfDepartment, company.departments[num - 1].dateOfCreate, company.departments[num - 1].numOfWorkers - 1);
+                                    company.departments[num - 1] = new Department(company.departments[num - 1].nameOfDepartment, company.departments[num - 1].dateOfCreate, company.departments[num - 1].numOfWorkers - 1, company.departments[num - 1].depId);
                                     break;
                                 }
                             }
@@ -92,8 +99,8 @@ namespace Homework_08
                             company.PrintAllWorkers();
                             Console.WriteLine("Какого сотрудника редактируем?");
                             num = Company.Check(company.workers.Count);
-                            result1 = CreateNew(company, company.departments, true);
-                            company.ChangeWorker(num-1,result1.Item1, result1.Item2, result1.Item3, result1.Item4, result1.Item5, result1.Item6, result1.Item7);
+                            var result1 = CreateNew(company, company.departments, true);
+                            company.ChangeWorker(num-1,result1.Item1, result1.Item2, result1.Item3, result1.Item4, result1.Item5, result1.Item6, result1.Item7, result1.Item8);
                             Console.WriteLine("Работник изменен");
                             break;
                         case "7":
@@ -113,7 +120,7 @@ namespace Homework_08
                             }
                             foreach (var worker in company.workers)
                             {
-                                if (worker.departmentName == company.departments[num - 1].nameOfDepartment)
+                                if (worker.depId == company.departments[num - 1].depId)
                                 {
                                     workers.Add(worker);
                                 }
@@ -147,7 +154,7 @@ namespace Homework_08
         /// Новая информация для департамента
         /// </summary>
         /// <returns>Новая информация о департаменте</returns>
-        public static (string,DateTime) CreateNew()
+        public static (string, DateTime, int) CreateNew()
         {
             Console.WriteLine("Введите название департамента");
             string name = Console.ReadLine();
@@ -158,7 +165,9 @@ namespace Homework_08
                 if (DateTime.TryParse(Console.ReadLine(), out date)) break;
                 Console.WriteLine("Некорректное значение");
             }
-            return (name, date);
+            Console.WriteLine("ID департамента");
+            int depId = Company.Check();
+            return (name, date, depId);
         }
         /// <summary>
         /// Новая информация для сотрдника
@@ -167,7 +176,7 @@ namespace Homework_08
         /// <param name="departments">Департаменты</param>
         /// <param name="old">Новый/старый сотрудник</param>
         /// <returns>Новая информация о сотрднике</returns>
-        public static (string,string,short,string,int,int,short) CreateNew(Company company, List<Department> departments, bool old)
+        public static (string, string, short, string, int, int, short, int) CreateNew(Company company, List<Department> departments, bool old)
         {
             Console.WriteLine("Введите имя сотрудника");
             string name = Console.ReadLine();
@@ -183,21 +192,14 @@ namespace Homework_08
             int project = Company.Check();
             Console.WriteLine("В каком депортаменте работает");
             company.PrintAllDepartments();
-            if (departments.Count == 0)
+            Console.WriteLine("ID департамента");
+            int depId = Company.Check();
+            int num = Company.Check(departments.Count);
+            if (!old)
             {
-                Console.WriteLine("Департаментов нет");
-                Console.WriteLine("Добавьте департамент, после добавляйте сотрудников");
-                return(name, surname, (short)age, "None", ID, solary, (short)project);
+                departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers + 1, departments[num-1].depId);
             }
-            else
-            {
-                int num = Company.Check(departments.Count);
-                if (!old)
-                {
-                    departments[num - 1] = new Department(departments[num - 1].nameOfDepartment, departments[num - 1].dateOfCreate, departments[num - 1].numOfWorkers + 1);
-                }
-                return (name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project);
-            }
+            return (name, surname, (short)age, departments[num - 1].nameOfDepartment, ID, solary, (short)project, depId);
         }
     }
 }
